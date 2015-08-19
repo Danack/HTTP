@@ -1,0 +1,27 @@
+{
+    "name": "Room11/HTTP",
+    "description": "A set of interfaces and standard implementations to allow sweet sweet interoperability.",
+    "keywords": ["http", "interface", "room11"],
+
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dan Ackroyd",
+            "email": "Danack@basereality.com",
+            "homepage": "http://www.basereality.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Room11/HTTP": "src/"
+        }
+    },
+
+    "require-dev": {
+        "phpunit/phpunit": "^4.8.5",
+        "rdlowrey/auryn": "^1.0.2",
+        "squizlabs/php_codesniffer": "^2.0.0"
+    },
+    "require":{
+    }
+}

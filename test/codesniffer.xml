@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<ruleset name="Room11_HTTP">
+    <description>Customised coding standard, because CodeSniffer is a tool not a way of life.</description>
+    <arg name="tab-width" value="4"/>
+
+    <!-- Exclude data files -->
+    <!-- <exclude-pattern>*compare.php</exclude-pattern> -->
+
+    <rule ref="PSR2">
+        <!-- This appears to break fall through case statements -->
+        <exclude name="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonCASE"/>
+
+        <!-- These sniffs break 'valid' code -->
+        <exclude name="PSR2.ControlStructures.SwitchDeclaration.BreakIndent"/>
+        <exclude name="PSR2.ControlStructures.SwitchDeclaration.WrongOpenercase"/>
+        <exclude name="PSR2.ControlStructures.SwitchDeclaration.WrongOpenerdefault"/>
+    </rule>
+</ruleset>
