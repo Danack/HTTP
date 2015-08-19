@@ -1,5 +1,5 @@
 {
-    "name": "Room11/HTTP",
+    "name": "room11/http",
     "description": "A set of interfaces and standard implementations to allow sweet sweet interoperability.",
     "keywords": ["http", "interface", "room11"],
 
