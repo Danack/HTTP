@@ -208,11 +208,10 @@ interface Response //implements \ArrayAccess
     /**
      * Assign a response entity body
      *
-     * @param null|string|callable|Body $body
-     * @throws \InvalidArgumentException
+     * @param Body $body
      * @return Response Returns the current object instance
      */
-    public function setBody($body);
+    public function setBody(Body $body);
 
     /**
      * Retrieve an array mapping header field names to their assigned values

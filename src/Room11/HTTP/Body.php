@@ -10,7 +10,7 @@ interface Body
     public function __invoke();
 
     /**
-     * Return an optional array of headers to be sent prior to entity body output
+     * Return an array of headers to be sent prior to entity body output
      */
     public function getHeaders();
 }

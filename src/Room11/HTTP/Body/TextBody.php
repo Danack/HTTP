@@ -21,7 +21,7 @@ class TextBody implements Body
      */
     public function __invoke()
     {
-        return $this->text;
+        echo  $this->text;
     }
 
     /**
@@ -29,11 +29,9 @@ class TextBody implements Body
      */
     public function getHeaders()
     {
-        return [];
-    }
-
-    public function __toString()
-    {
-        return $this->text;
+        return [
+            'Content-Type' => 'text/plain',
+            'Content-Length' => strlen($this->text)
+        ];
     }
 }

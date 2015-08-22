@@ -2,6 +2,7 @@
 
 namespace Room11\HTTP\Response;
 
+use Room11\HTTP\Body;
 use Room11\HTTP\HTTPException;
 
 class Response implements \Room11\HTTP\Response, \ArrayAccess
@@ -509,20 +510,10 @@ class Response implements \Room11\HTTP\Response, \ArrayAccess
      * @throws \InvalidArgumentException
      * @return Response Returns the current object instance
      */
-    public function setBody($body)
+    public function setBody(Body $body)
     {
-        if (is_string($body) || is_null($body)) {
-            $this->body = $body;
-        } elseif ($body instanceof Body) {
-            $this->body = $body;
-            $this->setAllHeaders($body->getHeaders());
-        } elseif (is_callable($body)) {
-            $this->body = $body;
-        } else {
-            throw new \InvalidArgumentException(
-                sprintf('Body must be a string or valid callable; %s provided', gettype($body))
-            );
-        }
+        $this->body = $body;
+        $this->setAllHeaders($body->getHeaders());
 
         return $this;
     }

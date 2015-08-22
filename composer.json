@@ -13,7 +13,7 @@
     ],
     "autoload": {
         "psr-0": {
-            "Room11/HTTP": "src/"
+            "Room11": "src/"
         }
     },
 
