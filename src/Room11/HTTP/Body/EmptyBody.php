@@ -6,22 +6,26 @@ use Room11\HTTP\Body;
 
 class EmptyBody implements Body
 {
-    public function __construct()
+    public function __construct($statusCode)
     {
+        $this->statusCode = $statusCode;
     }
 
-    public function __toString()
-    {
-        return '';
-    }
-    
     public function __invoke()
     {
-        return '';
+        return;
     }
 
     public function getHeaders()
     {
         return [];
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getStatusCode()
+    {
+        return $this->statusCode;
     }
 }

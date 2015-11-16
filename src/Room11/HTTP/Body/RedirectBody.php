@@ -15,11 +15,22 @@ class RedirectBody implements Body
      * @var
      */
     private $location;
+
+    private $statusCode;
     
-    public function __construct($text, $location)
+    public function __construct($text, $location, $statusCode)
     {
         $this->text = $text;
         $this->location = $location;
+        $this->statusCode = $statusCode;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getStatusCode()
+    {
+        return $this->statusCode;
     }
     
     /**

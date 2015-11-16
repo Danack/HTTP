@@ -3,15 +3,17 @@
 namespace Room11\HTTP\Body;
 
 use Room11\HTTP\Body;
+use Room11\HTTP\HTTPException;
 
 class JsonBody implements Body
 {
     private $json;
+    private $statusCode;
 
-    public function __construct($data, $flags = 0, $depth = 512)
+    public function __construct($data, $statusCode = 200, $flags = 0, $depth = 512)
     {
         if (PHP_VERSION_ID < 50500 && $depth != 512) {
-            throw new \RuntimeException('depth parameter not available before PHP 5.5');
+            throw new HTTPException('depth parameter not available before PHP 5.5');
         }
 
         if (PHP_VERSION_ID < 50500) {
@@ -25,8 +27,9 @@ class JsonBody implements Body
             $errorMsg = function_exists('json_last_error_msg')
                 ? json_last_error_msg()
                 : $this->jsonErrorMsg($errorCode);
-            throw new \RuntimeException($errorMsg);
+            throw new HTTPException($errorMsg);
         }
+        $this->statusCode = $statusCode;
     }
 
     private function jsonErrorMsg($errorCode)
@@ -58,5 +61,13 @@ class JsonBody implements Body
             'Content-Type' => 'application/json; charset=utf-8',
             'Content-Length' => strlen($this->json)
         ];
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getStatusCode()
+    {
+        return $this->statusCode;
     }
 }

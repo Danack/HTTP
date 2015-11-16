@@ -13,4 +13,9 @@ interface Body
      * Return an array of headers to be sent prior to entity body output
      */
     public function getHeaders();
+
+    /**
+     * @return int The HTTP status code according to RFC2616
+     */
+    public function getStatusCode();
 }

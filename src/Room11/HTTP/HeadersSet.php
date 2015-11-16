@@ -3,7 +3,7 @@
 namespace Room11\HTTP;
 
 /**
- * Class HeaderSet
+ * Class HeadersSet
  * Stores a set of headers. Useful for building up the set of
  * headers needed to create a response object, instead of having
  * to use the full response object everywhere.

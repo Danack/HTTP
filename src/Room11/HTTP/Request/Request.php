@@ -115,7 +115,7 @@ class Request implements \Room11\HTTP\Request, \ArrayAccess, \Iterator
         if (isset($this->headers[$ucField])) {
             return $this->headers[$ucField];
         } else {
-            throw new \DomainException(
+            throw new HTTPException(
                 sprintf("Unknown header field: %s", $field)
             );
         }
@@ -304,7 +304,7 @@ class Request implements \Room11\HTTP\Request, \ArrayAccess, \Iterator
         if (isset($this->files[$field])) {
             return $this->files[$field];
         } else {
-            throw new \DomainException(
+            throw new HTTPException(
                 sprintf("Unknown form file: %s", $field)
             );
         }
@@ -325,7 +325,7 @@ class Request implements \Room11\HTTP\Request, \ArrayAccess, \Iterator
         if (isset($this->cookies[$field])) {
             return $this->cookies[$field];
         } else {
-            throw new \DomainException(
+            throw new HTTPException(
                 sprintf("Unknown cookie field: %s", $field)
             );
         }
@@ -375,7 +375,7 @@ class Request implements \Room11\HTTP\Request, \ArrayAccess, \Iterator
         $tmpPath = sprintf("php://temp/maxmemory:%d", $this->inMemoryBodyStreamSize);
         if (!$tmpStream = fopen($tmpPath, 'w+')) {
             // @codeCoverageIgnoreStart
-            throw new \RuntimeException(
+            throw new HTTPException(
                 'Failed opening temporary entity body stream'
             );
             // @codeCoverageIgnoreEnd
@@ -408,7 +408,7 @@ class Request implements \Room11\HTTP\Request, \ArrayAccess, \Iterator
         if (isset($this->vars[$field])) {
             return $this->vars[$field];
         } else {
-            throw new \DomainException(
+            throw new HTTPException(
                 sprintf("Unknown request variable: %s", $field)
             );
         }
@@ -475,5 +475,10 @@ class Request implements \Room11\HTTP\Request, \ArrayAccess, \Iterator
         $key = key($this->vars);
 
         return isset($this->vars[$key]) || array_key_exists($key, $this->vars);
+    }
+
+    public function getProtocol()
+    {
+        return $this->get('SERVER_PROTOCOL');
     }
 }

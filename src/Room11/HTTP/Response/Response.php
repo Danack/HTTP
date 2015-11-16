@@ -41,7 +41,7 @@ class Response implements \Room11\HTTP\Response, \ArrayAccess
         $statusCode = @intval($statusCode);
 
         if ($statusCode < 100 || $statusCode > 599) {
-            throw new \InvalidArgumentException(
+            throw new HTTPException(
                 'Invalid response status code'
             );
         } else {
@@ -104,7 +104,7 @@ class Response implements \Room11\HTTP\Response, \ArrayAccess
     public function setHeader($field, $value)
     {
         if (!$field = @trim($field)) {
-            throw new \InvalidArgumentException(
+            throw new HTTPException(
                 'Non-empty string field name required at Argument 1'
             );
         }
@@ -118,7 +118,7 @@ class Response implements \Room11\HTTP\Response, \ArrayAccess
         } elseif (is_scalar($value) || is_null($value)) {
             $value = [(string) $value];
         } elseif (!(is_array($value) && $this->isValidArrayHeader($value))) {
-            throw new \InvalidArgumentException(
+            throw new HTTPException(
                 'Invalid header; scalar or one-dimensional array of scalars required'
             );
         }
@@ -149,7 +149,7 @@ class Response implements \Room11\HTTP\Response, \ArrayAccess
     private function setCookieFromRawHeaderValue($rawCookieStr)
     {
         if (!$rawCookieStr) {
-            throw new \InvalidArgumentException(
+            throw new HTTPException(
                 'Invalid cookie string'
             );
         }
@@ -158,7 +158,7 @@ class Response implements \Room11\HTTP\Response, \ArrayAccess
         $nvPair = array_shift($parts);
 
         if (strpos($nvPair, '=') === false) {
-            throw new \InvalidArgumentException;
+            throw new HTTPException("Malformed cookie, missing '='.");
         }
 
         list($name, $value) = explode('=', $nvPair, 2);
@@ -174,7 +174,7 @@ class Response implements \Room11\HTTP\Response, \ArrayAccess
                 $attrStruct['httponly'] = true;
                 continue;
             } elseif (strpos($part, '=') === false) {
-                throw new \InvalidArgumentException(
+                throw new HTTPException(
                     'Invalid cookie string: ' . $part
                 );
             }
@@ -265,14 +265,14 @@ class Response implements \Room11\HTTP\Response, \ArrayAccess
     {
         $fieldEndPosition = strpos($line, ':');
         if (!$fieldEndPosition) {
-            throw new \DomainException(
+            throw new HTTPException(
                 'Header line must match the format "Field-Name: value"'
             );
         }
 
         $field = trim(substr($line, 0, $fieldEndPosition));
         if (empty($field)) {
-            throw new \DomainException(
+            throw new HTTPException(
                 'Invalid header field'
             );
         }
@@ -495,7 +495,7 @@ class Response implements \Room11\HTTP\Response, \ArrayAccess
             $field = $this->ucHeaders[$ucField];
             $result = $this->headers[$field];
         } else {
-            throw new \DomainException(
+            throw new HTTPException(
                 sprintf('Header field is not assigned: %s', $field)
             );
         }
@@ -514,6 +514,7 @@ class Response implements \Room11\HTTP\Response, \ArrayAccess
     {
         $this->body = $body;
         $this->setAllHeaders($body->getHeaders());
+        $this->setStatus($body->getStatusCode());
 
         return $this;
     }
@@ -708,7 +709,7 @@ class Response implements \Room11\HTTP\Response, \ArrayAccess
                 if (isset($this->asgiMap[$offset]) || array_key_exists($offset, $this->asgiMap)) {
                     $value = $this->asgiMap[$offset];
                 } else {
-                    throw new \DomainException(
+                    throw new HTTPException(
                         sprintf("Unknown request variable: %s", $offset)
                     );
                 }

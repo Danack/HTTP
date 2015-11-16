@@ -9,8 +9,9 @@ class FileBody implements Body
 {
     private $headers = [];
     private $fileHandle;
+    private $statusCode;
 
-    public function __construct($path, $contentType, $headers = [])
+    public function __construct($path, $contentType, $headers = [], $statusCode = 200)
     {
         if (!is_string($path)) {
             throw new HTTPException(
@@ -46,10 +47,11 @@ class FileBody implements Body
             $this->headers["Content-Type"] = $contentType;
         }
         
-        //// TODO - this is not safe, needs to be encode by the appropriate
+        // TODO - this is not safe, needs to be encode by the appropriate
         // rfc scheme
         //$this->headers["Content-Disposition:"] =" filename=".$this->filename;
-        $this->headers = array_merge($this->headers, $headers); 
+        $this->headers = array_merge($this->headers, $headers);
+        $this->statusCode = $statusCode;
     }
 
     public function __invoke()
@@ -64,5 +66,13 @@ class FileBody implements Body
     public function getHeaders()
     {
         return $this->headers;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getStatusCode()
+    {
+        return $this->statusCode;
     }
 }

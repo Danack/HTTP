@@ -14,13 +14,13 @@ use Room11\HTTP\Body;
  */
 class ExceptionHtmlBody extends HtmlBody
 {
-    public function __construct($bodyText)
+    public function __construct($bodyText, $statusCode)
     {
         $fullText = $this->getBeforeText();
         $fullText .= $bodyText;
         $fullText .= $this->getAfterText();
 
-        parent::__construct($fullText);
+        parent::__construct($fullText, $statusCode);
     }
 
     private function getBeforeText()

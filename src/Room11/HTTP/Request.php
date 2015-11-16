@@ -2,7 +2,7 @@
 
 namespace Room11\HTTP;
 
-interface Request // implements \ArrayAccess, \Iterator
+interface Request
 {
     public function getPath();
 
@@ -120,21 +120,7 @@ interface Request // implements \ArrayAccess, \Iterator
 
     public function getBodyStream();
 
-    // public function set($offset, $value);
-    // public function has($field);
-    // public function get($field)
-    // public function all();
-
     public function isEncrypted();
-
-//  These seem like implementation details.
-//    public function offsetSet($offset, $value);
-//    public function offsetExists($offset);
-//    public function offsetUnset($offset);
-//    public function offsetGet($offset);
-//    public function rewind();
-//    public function current();
-//    public function key();
-//    public function next();
-//    public function valid();
+    
+    public function getProtocol();
 }

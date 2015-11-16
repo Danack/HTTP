@@ -1,6 +1,6 @@
 <?php
 
-namespace Tier\VariableMap;
+namespace Room11\HTTP\VariableMap;
 
 use Room11\HTTP\VariableMap;
 

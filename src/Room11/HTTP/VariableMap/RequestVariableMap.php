@@ -1,13 +1,14 @@
 <?php
 
-namespace Tier\VariableMap;
+namespace Room11\HTTP\VariableMap;
 
 use Room11\HTTP\Request;
 use Room11\HTTP\VariableMap;
 
 /**
  * Class RequestVariableMap
- * An implementation of VariableMap that uses a HTTP Request as the input. 
+ * An implementation of VariableMap that uses a HTTP Request as the input.
+ * Parameters are read from GET and POST variables in that order.
  */
 class RequestVariableMap implements VariableMap
 {
@@ -25,6 +26,10 @@ class RequestVariableMap implements VariableMap
         
         if ($this->request->hasQueryParameter($variableName)) {
             $value = $this->request->getQueryParameter($variableName);
+        }
+
+        if ($this->request->hasFormField($variableName)) {
+            $value = $this->request->getFormField($variableName);
         }
         
         if ($minimum !== false) {
