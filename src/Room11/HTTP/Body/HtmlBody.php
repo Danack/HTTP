@@ -15,14 +15,14 @@ class HtmlBody implements Body
         $this->statusCode = $statusCode;
     }
 
-    public function __toString()
+    public function getData()
     {
         return $this->text;
     }
-    
-    public function __invoke()
+
+    public function sendData()
     {
-        return $this->text;
+        echo $this->text;
     }
 
     public function getHeaders()

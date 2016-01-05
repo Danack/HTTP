@@ -22,12 +22,14 @@ class TextBody implements Body
         $this->statusCode = $statusCode;
     }
     
-    /**
-     * Responsible for outputting entity body data to STDOUT
-     */
-    public function __invoke()
+    public function getData()
     {
-        echo  $this->text;
+        return $this->text;
+    }
+
+    public function sendData()
+    {
+        echo $this->text;
     }
 
     /**

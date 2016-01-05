@@ -54,7 +54,7 @@ class FileBody implements Body
         $this->statusCode = $statusCode;
     }
 
-    public function __invoke()
+    public function sendData()
     {   
         if (@fpassthru($this->fileHandle) === false) {
             throw new HTTPException(
@@ -62,6 +62,20 @@ class FileBody implements Body
             );
         }
     }
+    
+    public function getData()
+    {
+        $bytes = stream_get_contents($this->fileHandle);
+        if ($bytes === false) {
+            throw new HTTPException(
+                sprintf("FileBody could not stream_get_contents filehandle")
+            );
+        }
+
+        return $bytes;
+    }
+    
+    
 
     public function getHeaders()
     {

@@ -27,8 +27,13 @@ class BlobBody implements Body
         $this->headers = array_merge($this->headers, $headers);
         $this->statusCode = $statusCode;
     }
-    
-    function __invoke()
+
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    public function sendData()
     {
         echo $this->data;
     }

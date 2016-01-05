@@ -45,14 +45,14 @@ class JsonBody implements Body
         return isset($errors[$errorCode]) ? $errors[$errorCode] : "Unknown error ({$errorCode})";
     }
 
-    public function __invoke()
-    {
-        echo $this->json;
-    }
-    
-    public function __toString()
+    public function getData()
     {
         return $this->json;
+    }
+
+    public function sendData()
+    {
+        echo $this->json;
     }
 
     public function getHeaders()

@@ -32,13 +32,15 @@ class RedirectBody implements Body
     {
         return $this->statusCode;
     }
-    
-    /**
-     * Responsible for outputting entity body data to STDOUT
-     */
-    public function __invoke()
+
+    public function getData()
     {
         return $this->text;
+    }
+
+    public function sendData()
+    {
+        echo $this->text;
     }
 
     /**

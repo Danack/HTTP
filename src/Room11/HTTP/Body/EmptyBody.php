@@ -11,11 +11,15 @@ class EmptyBody implements Body
         $this->statusCode = $statusCode;
     }
 
-    public function __invoke()
+    public function getData()
     {
-        return;
+        return "";
     }
 
+    public function sendData()
+    {
+    }
+    
     public function getHeaders()
     {
         return [];
