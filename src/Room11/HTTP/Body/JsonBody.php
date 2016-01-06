@@ -31,6 +31,11 @@ class JsonBody implements Body
         }
         $this->statusCode = $statusCode;
     }
+    
+    public function getReasonPhrase()
+    {
+        return null;
+    }
 
     private function jsonErrorMsg($errorCode)
     {

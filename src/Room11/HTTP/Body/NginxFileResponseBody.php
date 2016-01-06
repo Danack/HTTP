@@ -33,6 +33,11 @@ class NginxFileResponseBody
         $this->headers['X-Accel-Redirect'] = $nginxAccelFilenameTranslator->translate($fileNameToServe);
     }
 
+    public function getReasonPhrase()
+    {
+        return null;
+    }
+    
     public function getData()
     {
         return "";

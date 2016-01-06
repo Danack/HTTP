@@ -50,5 +50,10 @@ class BlobBody implements Body
     {
         return $this->statusCode;
     }
+    
+    public function getReasonPhrase()
+    {
+        return null;
+    }
 }
 

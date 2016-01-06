@@ -6,21 +6,26 @@ use Room11\HTTP\Body;
 
 class TextBody implements Body
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $text;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $statusCode;
     
-    public function __construct($text, $statusCode = 200)
+    private $reasonPhrase;
+
+    public function __construct($text, $statusCode = 200, $reasonPhrase = null)
     {
         $this->text = $text;
         $this->statusCode = $statusCode;
+        $this->reasonPhrase = $reasonPhrase;
     }
+    
+    public function getReasonPhrase()
+    {
+        return $this->reasonPhrase;
+    }
+
     
     public function getData()
     {

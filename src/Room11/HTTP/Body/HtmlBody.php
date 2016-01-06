@@ -8,12 +8,20 @@ class HtmlBody implements Body
 {
     private $text;
     private $statusCode;
+    private $reasonPhrase;
     
-    public function __construct($text, $statusCode = 200)
+    public function __construct($text, $statusCode = 200, $reasonPhrase = null)
     {
         $this->text = (string)$text;
         $this->statusCode = $statusCode;
+        $this->reasonPhrase = $reasonPhrase;
     }
+    
+    public function getReasonPhrase()
+    {
+        return $this->reasonPhrase;
+    }
+    
 
     public function getData()
     {

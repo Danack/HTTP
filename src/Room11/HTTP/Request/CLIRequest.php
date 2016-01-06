@@ -3,12 +3,8 @@
 
 namespace Room11\HTTP\Request;
 
-//use Psr\Http\Message\An;
-use Psr\Http\Message\MessageInterface;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
-use Room11\HTTP\HTTPException;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Stream;
 use Zend\Diactoros\Uri;
@@ -24,10 +20,12 @@ class CLIRequest implements ServerRequestInterface
     public function __construct(
         $path,
         $serverName,
+        $method = "GET",
         $secure = false
     ) {
         $this->path = $path;
         $this->serverName = $serverName;
+        $this->method = $method;
         $this->secure = $secure;
     }
 
@@ -58,7 +56,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function withProtocolVersion($version)
     {
-        // TODO: Implement withProtocolVersion() method.
+        throw new \Exception("Not implemented");
     }
 
     /**
@@ -164,7 +162,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function withHeader($name, $value)
     {
-        // TODO: Implement withHeader() method.
+        throw new \Exception("Not implemented");
     }
 
     /**
@@ -185,7 +183,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function withAddedHeader($name, $value)
     {
-        // TODO: Implement withAddedHeader() method.
+        throw new \Exception("Not implemented");
     }
 
     /**
@@ -202,7 +200,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function withoutHeader($name)
     {
-        // TODO: Implement withoutHeader() method.
+        throw new \Exception("Not implemented");
     }
 
     /**
@@ -284,7 +282,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function getMethod()
     {
-        return "GET";
+        return $this->method;
     }
 
     /**
@@ -304,7 +302,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function withMethod($method)
     {
-        // TODO: Implement withMethod() method.
+        throw new \Exception("Not implemented");
     }
 
     /**
@@ -367,7 +365,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function withUri(UriInterface $uri, $preserveHost = false)
     {
-        // TODO: Implement withUri() method.
+        throw new \Exception("Not implemented");
     }
 
     /**
@@ -381,7 +379,6 @@ class CLIRequest implements ServerRequestInterface
      */
     public function getServerParams()
     {
-        // TODO: Implement getServerParams() method.
         return [];
     }
 
@@ -397,7 +394,6 @@ class CLIRequest implements ServerRequestInterface
      */
     public function getCookieParams()
     {
-        // TODO: Implement getCookieParams() method.
         return [];
     }
 
@@ -420,7 +416,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function withCookieParams(array $cookies)
     {
-        // TODO: Implement withCookieParams() method.
+        throw new \Exception("Not implemented");
     }
 
     /**
@@ -464,7 +460,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function withQueryParams(array $query)
     {
-        // TODO: Implement withQueryParams() method.
+        throw new \Exception("Not implemented");
     }
 
     /**
@@ -481,7 +477,6 @@ class CLIRequest implements ServerRequestInterface
      */
     public function getUploadedFiles()
     {
-        // TODO: Implement getUploadedFiles() method.
         return [];
     }
 
@@ -498,7 +493,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function withUploadedFiles(array $uploadedFiles)
     {
-        // TODO: Implement withUploadedFiles() method.
+        throw new \Exception("Not implemented");
     }
 
     /**
@@ -551,7 +546,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function withParsedBody($data)
     {
-        // TODO: Implement withParsedBody() method.
+        throw new \Exception("Not implemented");
     }
 
     /**
@@ -567,7 +562,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function getAttributes()
     {
-        // TODO: Implement getAttributes() method.
+        return [];
     }
 
     /**
@@ -587,7 +582,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function getAttribute($name, $default = null)
     {
-        // TODO: Implement getAttribute() method.
+        return $default;
     }
 
     /**
@@ -607,7 +602,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function withAttribute($name, $value)
     {
-        // TODO: Implement withAttribute() method.
+        throw new \Exception("Not implemented");
     }
 
     /**
@@ -626,6 +621,6 @@ class CLIRequest implements ServerRequestInterface
      */
     public function withoutAttribute($name)
     {
-        // TODO: Implement withoutAttribute() method.
+        throw new \Exception("Not implemented");
     }
 }

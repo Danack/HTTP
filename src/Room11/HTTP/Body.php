@@ -24,4 +24,12 @@ interface Body
      * @return int The HTTP status code according to RFC2616
      */
     public function getStatusCode();
+
+
+    /**
+     * Return the reason phrase or null if a custom one has not been set.
+     * @return string|null
+     */
+    public function getReasonPhrase();
+    
 }
