@@ -4,12 +4,16 @@ namespace Room11\HTTP\Body;
 
 use Room11\HTTP\Body;
 use Room11\HTTP\HTTPException;
+use Room11\HTTP\HeadersSet;
 
 class FileBody implements Body
 {
-    private $headers = [];
+    
     private $fileHandle;
     private $statusCode;
+    
+    /** @var HeadersSet  */
+    private $headersSet;
 
     public function __construct(
         $path,
@@ -47,21 +51,26 @@ class FileBody implements Body
                 sprintf('FileBody could not determine file size from fstat: %s', $path)
             );
         }
-        $this->headers['Content-Length'] = $statInfo['size'];
+
+        $this->statusCode = $statusCode;
+        $this->reasonPhrase = $reasonPhrase;
+        
+        $this->headersSet = new HeadersSet();
+        $this->headersSet->addHeader('Content-Length', (string)$statInfo['size']);
         if ($contentType) {
-            $this->headers["Content-Type"] = $contentType;
+            $this->headersSet->addHeader("Content-Type", $contentType);
         }
         
         // TODO - this is not safe, needs to be encode by the appropriate
         // rfc scheme
         //$this->headers["Content-Disposition:"] =" filename=".$this->filename;
-        $this->headers = array_merge($this->headers, $headers);
-        $this->statusCode = $statusCode;
-        $this->reasonPhrase = $reasonPhrase;
+        foreach ($headers as $name => $value) {
+            $this->headersSet->addHeader($name, $value);
+        }
     }
 
     public function sendData()
-    {   
+    {
         if (@fpassthru($this->fileHandle) === false) {
             throw new HTTPException(
                 sprintf("FileBody could not fpassthru filehandle")
@@ -86,9 +95,9 @@ class FileBody implements Body
         return $this->reasonPhrase;
     }
     
-    public function getHeaders()
+    public function getHeadersSet()
     {
-        return $this->headers;
+        return $this->headersSet;
     }
     
     /**

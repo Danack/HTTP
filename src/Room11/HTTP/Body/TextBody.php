@@ -3,6 +3,7 @@
 namespace Room11\HTTP\Body;
 
 use Room11\HTTP\Body;
+use Room11\HTTP\HeadersSet;
 
 class TextBody implements Body
 {
@@ -19,6 +20,10 @@ class TextBody implements Body
         $this->text = $text;
         $this->statusCode = $statusCode;
         $this->reasonPhrase = $reasonPhrase;
+        
+        $this->headersSet = new HeadersSet();
+        $this->headersSet->addHeader('Content-Type', 'text/plain');
+        $this->headersSet->addHeader('Content-Length', (string)strlen($this->text));
     }
     
     public function getReasonPhrase()
@@ -48,11 +53,8 @@ class TextBody implements Body
     /**
      * Return an optional array of headers to be sent prior to entity body output
      */
-    public function getHeaders()
+    public function getHeadersSet()
     {
-        return [
-            'Content-Type' => 'text/plain',
-            'Content-Length' => strlen($this->text)
-        ];
+        return $this->headersSet;
     }
 }

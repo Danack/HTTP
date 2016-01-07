@@ -3,6 +3,7 @@
 namespace Room11\HTTP\Body;
 
 use Room11\HTTP\Body;
+use Room11\HTTP\HeadersSet;
 
 /**
  * Class BlobBody
@@ -13,19 +14,25 @@ use Room11\HTTP\Body;
 class BlobBody implements Body
 {
     private $data;
-    private $headers;
     private $statusCode;
 
-    function __construct($filename, $data, $mimeType = null, $headers = [], $statusCode = 200)
+    /** @var HeadersSet  */
+    private $headersSet;
+
+    public function __construct($filename, $data, $mimeType = null, $headers = [], $statusCode = 200)
     {
-        if ($mimeType) {
-             $this->headers['Content-Type'] = $mimeType;
-        }
-        $this->headers['Content-Length'] = strlen($data);
-        $this->headers['Content-Disposition'] = 'filename='.$filename;
         $this->data = $data;
-        $this->headers = array_merge($this->headers, $headers);
         $this->statusCode = $statusCode;
+        $this->headersSet = new HeadersSet();
+        $this->headersSet->addHeader('Content-Length', (string)strlen($data));
+        $this->headersSet->addHeader('Content-Disposition', 'filename='.$filename);
+        if ($mimeType) {
+             $this->headersSet->addHeader('Content-Type', $mimeType);
+        }
+        
+        foreach ($headers as $name => $value) {
+            $this->headersSet->addHeader($name, $value);
+        }
     }
 
     public function getData()
@@ -38,9 +45,9 @@ class BlobBody implements Body
         echo $this->data;
     }
     
-    public function getHeaders()
+    public function getHeadersSet()
     {
-        return $this->headers;
+        return $this->headersSet;
     }
 
     /**
@@ -56,4 +63,3 @@ class BlobBody implements Body
         return null;
     }
 }
-

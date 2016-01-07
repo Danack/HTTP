@@ -2,7 +2,6 @@
 
 namespace JigTest;
 
-
 class BugTest extends \PHPUnit_Framework_TestCase
 {
     

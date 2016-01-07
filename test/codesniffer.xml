@@ -10,6 +10,9 @@
         <!-- This appears to break fall through case statements -->
         <exclude name="PSR2.ControlStructures.SwitchDeclaration.SpaceBeforeColonCASE"/>
 
+        <!-- TODO make this be newline -->
+        <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace"/>
+        
         <!-- These sniffs break 'valid' code -->
         <exclude name="PSR2.ControlStructures.SwitchDeclaration.BreakIndent"/>
         <exclude name="PSR2.ControlStructures.SwitchDeclaration.WrongOpenercase"/>

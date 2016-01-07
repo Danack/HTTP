@@ -16,20 +16,19 @@ interface Body
     public function getData();
 
     /**
-     * Return an array of headers to be sent prior to entity body output
+     * Return a set of headers for to be used with this body.
+     * @return \Room11\HTTP\HeadersSet
      */
-    public function getHeaders();
+    public function getHeadersSet();
 
     /**
      * @return int The HTTP status code according to RFC2616
      */
     public function getStatusCode();
 
-
     /**
      * Return the reason phrase or null if a custom one has not been set.
      * @return string|null
      */
     public function getReasonPhrase();
-    
 }

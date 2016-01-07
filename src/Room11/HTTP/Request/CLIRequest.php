@@ -16,9 +16,24 @@ use Zend\Diactoros\Uri;
 class CLIRequest implements ServerRequestInterface
 {
     private $path;
+    private $serverName;
+    private $method;
+    private $isSecure;
     
-    public function __construct($path) {
+    private $overridingProtocolVersion;
+    
+    
+
+    public function __construct(
+        $path,
+        $serverName,
+        $method = 'GET',
+        $isSecure = false
+    ) {
         $this->path = $path;
+        $this->serverName = $serverName;
+        $this->method = $method;
+        $this->isSecure = $isSecure;
     }
 
     /**
@@ -274,7 +289,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function getMethod()
     {
-        return "GET";
+        return $this->method;
     }
 
     /**
@@ -308,7 +323,20 @@ class CLIRequest implements ServerRequestInterface
      */
     public function getUri()
     {
-        return new Uri("http://example.com/");
+        $schema = "http";
+
+        if ($this->isSecure) {
+            $schema = "https";
+        }
+        
+        $uri = sprintf(
+            "%s://%s%s",
+            $schema,
+            $this->serverName,
+            $this->path
+        );
+        
+        return new Uri($uri);
     }
 
     /**
@@ -373,7 +401,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function getCookieParams()
     {
-        // TODO: Implement getCookieParams() method.
+        //Cli does not support cookies.
         return [];
     }
 
@@ -396,7 +424,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function withCookieParams(array $cookies)
     {
-        // TODO: Implement withCookieParams() method.
+        return clone $this;
     }
 
     /**
@@ -457,7 +485,6 @@ class CLIRequest implements ServerRequestInterface
      */
     public function getUploadedFiles()
     {
-        // TODO: Implement getUploadedFiles() method.
         return [];
     }
 
@@ -474,7 +501,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function withUploadedFiles(array $uploadedFiles)
     {
-        // TODO: Implement withUploadedFiles() method.
+        return clone $this;
     }
 
     /**
@@ -543,7 +570,8 @@ class CLIRequest implements ServerRequestInterface
      */
     public function getAttributes()
     {
-        // TODO: Implement getAttributes() method.
+        //CliRequest does not support attributes
+        return [];
     }
 
     /**
@@ -563,7 +591,8 @@ class CLIRequest implements ServerRequestInterface
      */
     public function getAttribute($name, $default = null)
     {
-        // TODO: Implement getAttribute() method.
+        //CliRequest does not support attributes
+        return $default;
     }
 
     /**
@@ -583,7 +612,7 @@ class CLIRequest implements ServerRequestInterface
      */
     public function withAttribute($name, $value)
     {
-        // TODO: Implement withAttribute() method.
+        return clone $this;
     }
 
     /**
@@ -602,209 +631,6 @@ class CLIRequest implements ServerRequestInterface
      */
     public function withoutAttribute($name)
     {
-        // TODO: Implement withoutAttribute() method.
+        return clone $this;
     }
-
-
-
-
-//    public function getPath()
-//    {
-//        return $this->path;
-//    }
-//
-//    public function getProtocol()
-//    {
-//        return "1.1";
-//    }
-//    
-//    /**
-//     * Did the request contain the specified header field?
-//     *
-//     * Header field names are NOT case-sensitive.
-//     *
-//     * @param string $field
-//     * @return bool
-//     */
-//    public function hasHeader($field)
-//    {
-//        // TODO: Implement hasHeader() method.
-//    }
-//
-//    public function getHeader($field)
-//    {
-//        // TODO: Implement getHeader() method.
-//    }
-//
-//    public function getAllHeaders()
-//    {
-//        // TODO: Implement getAllHeaders() method.
-//    }
-//
-//    public function hasQueryParameter($field)
-//    {
-//        // TODO: Implement hasQueryParameter() method.
-//    }
-//
-//    /**
-//     * Retrieve the value of a query parameter
-//     *
-//     * If the specified query parameter does not exist a \DomainException is thrown. If uncaught
-//     * this exception results in a 500 Internal Server Error being relayed to the user.
-//     *
-//     * @param string $field
-//     * @throws HTTPException If query field does not exist in the request
-//     * @return array|string
-//     */
-//    public function getQueryParameter($field)
-//    {
-//        // TODO: Implement getQueryParameter() method.
-//    }
-//
-//    /**
-//     * A convenience method for retrieving a query parameter with the expectation that the value is an array
-//     *
-//     * An uncaught UserInputException will result in a 400 Invalid Query Parameter response being
-//     * returned to the user.
-//     *
-//     * @throws HTTPException If query field does not exist in the request
-//     * @param string $field
-//     * @return array
-//     */
-//    public function getArrayQueryParameter($field)
-//    {
-//        // TODO: Implement getArrayQueryParameter() method.
-//    }
-//
-//    /**
-//     * A convenience method for retrieving a query parameter with the expectation that the value is a string
-//     *
-//     * An uncaught UserInputException will result in a 400 Invalid Query Parameter response being
-//     * returned to the user.
-//     *
-//     * @throws HTTPException If query field does not exist in the request
-//     * @param string $field
-//     * @return string
-//     */
-//    public function getStringQueryParameter($field)
-//    {
-//        // TODO: Implement getStringQueryParameter() method.
-//    }
-//
-//    public function getAllQueryParameters()
-//    {
-//        // TODO: Implement getAllQueryParameters() method.
-//    }
-//
-//    public function hasFormField($field)
-//    {
-//        // TODO: Implement hasFormField() method.
-//    }
-//
-//    /**
-//     * Retrieve the value of a submitted form field
-//     *
-//     * If the specified form field does not exist a \DomainException is thrown. If uncaught
-//     * this exception results in a 500 Internal Server Error being relayed to the user.
-//     *
-//     * @param string $field
-//     * @throws \DomainException If form field does not exist in the request
-//     * @return string|array
-//     */
-//    public function getFormField($field)
-//    {
-//        // TODO: Implement getFormField() method.
-//    }
-//
-//    /**
-//     * A convenience method for retrieving a form field with the expectation that the value is an array
-//     *
-//     * An uncaught UserInputException will result in a 400 Invalid Query Parameter response being
-//     * returned to the user.
-//     *
-//     * @throws HTTPException If form field does not exist in the request
-//     * @param string $field
-//     * @return array
-//     */
-//    public function getArrayFormField($field)
-//    {
-//        // TODO: Implement getArrayFormField() method.
-//    }
-//
-//    /**
-//     * A convenience method for retrieving a form field with the expectation that the value is a string
-//     *
-//     * An uncaught UserInputException will result in a 400 Invalid Query Parameter response being
-//     * returned to the user.
-//     *
-//     * @throws HTTPException If form field does not exist in the request
-//     * @param string $field
-//     * @return string
-//     */
-//    public function getStringFormField($field)
-//    {
-//        // TODO: Implement getStringFormField() method.
-//    }
-//
-//    public function getAllFormFields()
-//    {
-//        // TODO: Implement getAllFormFields() method.
-//    }
-//
-//    public function hasFormFile($field)
-//    {
-//        // TODO: Implement hasFormFile() method.
-//    }
-//
-//    public function getFormFile($field)
-//    {
-//        // TODO: Implement getFormFile() method.
-//    }
-//
-//    public function getAllFormFiles()
-//    {
-//        // TODO: Implement getAllFormFiles() method.
-//    }
-//
-//    public function hasCookie($field)
-//    {
-//        // TODO: Implement hasCookie() method.
-//    }
-//
-//    public function getCookie($field)
-//    {
-//        // TODO: Implement getCookie() method.
-//    }
-//
-//    public function getAllCookies()
-//    {
-//        // TODO: Implement getAllCookies() method.
-//    }
-//
-//    public function hasBody()
-//    {
-//        // TODO: Implement hasBody() method.
-//    }
-//
-//    public function getBody()
-//    {
-//        // TODO: Implement getBody() method.
-//    }
-//
-//    public function getMethod()
-//    {
-//        return "GET";
-//    }
-//
-//    public function getBodyStream()
-//    {
-//        // TODO: Implement getBodyStream() method.
-//    }
-//
-//    public function isEncrypted()
-//    {
-//        // TODO: Implement isEncrypted() method.
-//    }
-
-
 }

@@ -3,17 +3,17 @@
 namespace Room11\HTTP\Body;
 
 use Room11\HTTP\Body;
+use Room11\HTTP\HeadersSet;
 
 /**
  * Class NginxFileResponseBody
- * 
- * 
+ *
+ *
  * @TODO add X-Accel-Buffering and X-Accel-Limit-Rate headers
  */
 class NginxFileResponseBody
 {
     private $headers = [];
-
 
     /**
      * @param NginxAccelFilenameTranslator $nginxAccelFilenameTranslator
@@ -21,7 +21,7 @@ class NginxFileResponseBody
      * @param $contentType
      * @param array $headers
      */
-    function __construct(
+    public function __construct(
         NginxAccelFilenameTranslator $nginxAccelFilenameTranslator,
         $fileNameToServe,
         $contentType,
@@ -29,8 +29,14 @@ class NginxFileResponseBody
         $statusCode = 200
     ) {
         $this->statusCode = $statusCode;
-        $this->headers['Content-Type'] = $contentType;
-        $this->headers['X-Accel-Redirect'] = $nginxAccelFilenameTranslator->translate($fileNameToServe);
+        
+        $this->headersSet = new HeadersSet();
+        
+        $this->headersSet->addHeader('Content-Type', $contentType);
+        $this->headersSet->addHeader(
+            'X-Accel-Redirect',
+            $nginxAccelFilenameTranslator->translate($fileNameToServe)
+        );
     }
 
     public function getReasonPhrase()
@@ -48,9 +54,9 @@ class NginxFileResponseBody
         echo "";
     }
 
-    function getHeaders()
+    public function getHeadersSet()
     {
-        return $this->headers;
+        return $this->headersSet;
     }
     
     /**
@@ -60,5 +66,4 @@ class NginxFileResponseBody
     {
         return $this->statusCode;
     }
-
 }

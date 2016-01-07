@@ -3,6 +3,7 @@
 namespace Room11\HTTP\Body;
 
 use Room11\HTTP\Body;
+use Room11\HTTP\HeadersSet;
 
 class RedirectBody implements Body
 {
@@ -23,7 +24,10 @@ class RedirectBody implements Body
         $this->text = $text;
         $this->location = $location;
         $this->statusCode = $statusCode;
-        $this->reasonPhrase = $reasonPhrase;;
+        $this->reasonPhrase = $reasonPhrase;
+        
+        $this->headersSet = new HeadersSet();
+        $this->headersSet->addHeader('Location', $this->location);
     }
     
     public function getReasonPhrase()
@@ -52,9 +56,9 @@ class RedirectBody implements Body
     /**
      * Return an optional array of headers to be sent prior to entity body output
      */
-    public function getHeaders()
+    public function getHeadersSet()
     {
-        return ['Location' => $this->location];
+        return $this->headersSet;
     }
 
     public function __toString()

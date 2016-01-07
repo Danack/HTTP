@@ -4,11 +4,14 @@ namespace Room11\HTTP\Body;
 
 use Room11\HTTP\Body;
 use Room11\HTTP\HTTPException;
+use Room11\HTTP\HeadersSet;
 
 class JsonBody implements Body
 {
     private $json;
     private $statusCode;
+    
+    private $headersSet;
 
     public function __construct($data, $statusCode = 200, $flags = 0, $depth = 512)
     {
@@ -30,6 +33,10 @@ class JsonBody implements Body
             throw new HTTPException($errorMsg);
         }
         $this->statusCode = $statusCode;
+
+        $this->headersSet = new HeadersSet();
+        $this->headersSet->addHeader('Content-Type', 'application/json; charset=utf-8');
+        $this->headersSet->addHeader('Content-Length', (string)strlen($this->json));
     }
     
     public function getReasonPhrase()
@@ -60,12 +67,9 @@ class JsonBody implements Body
         echo $this->json;
     }
 
-    public function getHeaders()
+    public function getHeadersSet()
     {
-        return [
-            'Content-Type' => 'application/json; charset=utf-8',
-            'Content-Length' => strlen($this->json)
-        ];
+        return $this->headersSet;
     }
     
     /**

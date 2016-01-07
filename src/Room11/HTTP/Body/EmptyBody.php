@@ -3,6 +3,7 @@
 namespace Room11\HTTP\Body;
 
 use Room11\HTTP\Body;
+use Room11\HTTP\HeadersSet;
 
 class EmptyBody implements Body
 {
@@ -29,9 +30,9 @@ class EmptyBody implements Body
     {
     }
     
-    public function getHeaders()
+    public function getHeadersSet()
     {
-        return [];
+        return new HeadersSet();
     }
     
     /**
