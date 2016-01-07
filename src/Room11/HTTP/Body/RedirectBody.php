@@ -15,14 +15,20 @@ class RedirectBody implements Body
      * @var
      */
     private $location;
-
     private $statusCode;
-    
-    public function __construct($text, $location, $statusCode)
+    private $reasonPhrase;
+
+    public function __construct($text, $location, $statusCode, $reasonPhrase = null)
     {
         $this->text = $text;
         $this->location = $location;
         $this->statusCode = $statusCode;
+        $this->reasonPhrase = $reasonPhrase;;
+    }
+    
+    public function getReasonPhrase()
+    {
+        return $this->reasonPhrase;
     }
 
     /**
@@ -32,13 +38,15 @@ class RedirectBody implements Body
     {
         return $this->statusCode;
     }
-    
-    /**
-     * Responsible for outputting entity body data to STDOUT
-     */
-    public function __invoke()
+
+    public function getData()
     {
         return $this->text;
+    }
+
+    public function sendData()
+    {
+        echo $this->text;
     }
 
     /**

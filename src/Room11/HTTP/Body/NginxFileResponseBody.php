@@ -31,10 +31,20 @@ class NginxFileResponseBody
         $this->statusCode = $statusCode;
         $this->headers['Content-Type'] = $contentType;
         $this->headers['X-Accel-Redirect'] = $nginxAccelFilenameTranslator->translate($fileNameToServe);
-
     }
 
-    function __invoke() {
+    public function getReasonPhrase()
+    {
+        return null;
+    }
+    
+    public function getData()
+    {
+        return "";
+    }
+
+    public function sendData()
+    {
         echo "";
     }
 

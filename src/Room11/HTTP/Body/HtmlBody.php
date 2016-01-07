@@ -8,21 +8,29 @@ class HtmlBody implements Body
 {
     private $text;
     private $statusCode;
+    private $reasonPhrase;
     
-    public function __construct($text, $statusCode = 200)
+    public function __construct($text, $statusCode = 200, $reasonPhrase = null)
     {
         $this->text = (string)$text;
         $this->statusCode = $statusCode;
-    }
-
-    public function __toString()
-    {
-        return $this->text;
+        $this->reasonPhrase = $reasonPhrase;
     }
     
-    public function __invoke()
+    public function getReasonPhrase()
+    {
+        return $this->reasonPhrase;
+    }
+    
+
+    public function getData()
     {
         return $this->text;
+    }
+
+    public function sendData()
+    {
+        echo $this->text;
     }
 
     public function getHeaders()

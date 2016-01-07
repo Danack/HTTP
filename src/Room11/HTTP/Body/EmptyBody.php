@@ -6,16 +6,29 @@ use Room11\HTTP\Body;
 
 class EmptyBody implements Body
 {
-    public function __construct($statusCode)
+    private $statusCode;
+    private $reasonPhrase;
+    
+    public function __construct($statusCode, $reasonPhrase = null)
     {
         $this->statusCode = $statusCode;
+        $this->reasonPhrase = $reasonPhrase;
     }
 
-    public function __invoke()
+    public function getReasonPhrase()
     {
-        return;
+        return $this->reasonPhrase;
     }
 
+    public function getData()
+    {
+        return "";
+    }
+
+    public function sendData()
+    {
+    }
+    
     public function getHeaders()
     {
         return [];

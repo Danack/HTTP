@@ -11,8 +11,13 @@ class FileBody implements Body
     private $fileHandle;
     private $statusCode;
 
-    public function __construct($path, $contentType, $headers = [], $statusCode = 200)
-    {
+    public function __construct(
+        $path,
+        $contentType,
+        $headers = [],
+        $statusCode = 200,
+        $reasonPhrase = null
+    ) {
         if (!is_string($path)) {
             throw new HTTPException(
                 sprintf('FileBody path must be a string filesystem path; %s specified', gettype($path))
@@ -52,9 +57,10 @@ class FileBody implements Body
         //$this->headers["Content-Disposition:"] =" filename=".$this->filename;
         $this->headers = array_merge($this->headers, $headers);
         $this->statusCode = $statusCode;
+        $this->reasonPhrase = $reasonPhrase;
     }
 
-    public function __invoke()
+    public function sendData()
     {   
         if (@fpassthru($this->fileHandle) === false) {
             throw new HTTPException(
@@ -62,7 +68,24 @@ class FileBody implements Body
             );
         }
     }
+    
+    public function getData()
+    {
+        $bytes = stream_get_contents($this->fileHandle);
+        if ($bytes === false) {
+            throw new HTTPException(
+                sprintf("FileBody could not stream_get_contents filehandle")
+            );
+        }
 
+        return $bytes;
+    }
+    
+    public function getReasonPhrase()
+    {
+        return $this->reasonPhrase;
+    }
+    
     public function getHeaders()
     {
         return $this->headers;
