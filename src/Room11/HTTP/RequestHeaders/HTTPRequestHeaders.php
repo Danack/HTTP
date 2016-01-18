@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Room11\HTTP\Request;
+namespace Room11\HTTP\RequestHeaders;
 
 use Room11\HTTP\RequestHeaders;
 use Psr\Http\Message\ServerRequestInterface;
