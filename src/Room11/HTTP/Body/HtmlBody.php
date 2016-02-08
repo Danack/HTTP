@@ -21,7 +21,7 @@ class HtmlBody implements Body
         $this->reasonPhrase = $reasonPhrase;
         
         $this->headersSet = new HeadersSet();
-        $this->headersSet->addHeader('Content-Type', 'text/html; charset=UTF-8; charset=utf-8');
+        $this->headersSet->addHeader('Content-Type', 'text/html; charset=UTF-8');
         $this->headersSet->addHeader('Content-Length', (string)strlen($this->text));
     }
     
