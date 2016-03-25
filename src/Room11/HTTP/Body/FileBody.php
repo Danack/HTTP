@@ -17,6 +17,7 @@ class FileBody implements Body
 
     public function __construct(
         $path,
+        $downloadFilename,
         $contentType,
         $headers = [],
         $statusCode = 200,
@@ -63,7 +64,7 @@ class FileBody implements Body
         
         // TODO - this is not safe, needs to be encode by the appropriate
         // rfc scheme
-        //$this->headers["Content-Disposition:"] =" filename=".$this->filename;
+        $this->headersSet->addHeader("Content-Disposition", "inline; filename=".$downloadFilename);
         foreach ($headers as $name => $value) {
             $this->headersSet->addHeader($name, $value);
         }
