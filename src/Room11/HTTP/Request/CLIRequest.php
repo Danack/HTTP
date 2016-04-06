@@ -441,7 +441,9 @@ class CLIRequest implements ServerRequestInterface
      */
     public function getQueryParams()
     {
-        return $this->getUri()->getQuery();
+        $params = [];
+        parse_str($this->getUri()->getQuery(), $params);
+        return $params;
     }
 
     /**
